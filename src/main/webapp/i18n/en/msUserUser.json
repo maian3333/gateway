@@ -1,0 +1,39 @@
+{
+  "gatewayApp": {
+    "msUserUser": {
+      "home": {
+        "title": "Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User",
+        "createOrEditLabel": "Create or edit a User",
+        "notFound": "No Users found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete User {{ id }}?"
+      },
+      "detail": {
+        "title": "User"
+      },
+      "id": "Id",
+      "username": "Username",
+      "email": "Email",
+      "passwordHash": "Password Hash",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phoneNumber": "Phone Number",
+      "dateOfBirth": "Date Of Birth",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "keycloakUserId": "Keycloak User Id",
+      "userAvatar": "User Avatar",
+      "isActive": "Is Active"
+    }
+  },
+  "msUserApp": {
+    "msUserUser": {
+      "created": "A new User is created with identifier {{ param }}",
+      "updated": "A User is updated with identifier {{ param }}",
+      "deleted": "A User is deleted with identifier {{ param }}"
+    }
+  }
+}

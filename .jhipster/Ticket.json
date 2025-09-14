@@ -1,0 +1,64 @@
+{
+  "annotations": {
+    "changelogDate": "20250831164312"
+  },
+  "applications": ["gateway", "ms_booking"],
+  "clientRootFolder": "ms_booking",
+  "databaseType": "no",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "scheduleId",
+      "fieldType": "UUID",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "seatNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "seatType",
+      "fieldType": "SeatType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ECONOMY,BUSINESS,FIRST_CLASS,VIP"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "TicketStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "AVAILABLE,BOOKED,CANCELLED,EXPIRED"
+    },
+    {
+      "fieldName": "reservedUntil",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "microserviceName": "ms_booking",
+  "name": "Ticket",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

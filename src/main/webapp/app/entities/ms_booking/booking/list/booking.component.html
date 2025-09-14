@@ -1,0 +1,178 @@
+<div>
+  <h2 id="page-heading" data-cy="BookingHeading">
+    <span jhiTranslate="gatewayApp.msBookingBooking.home.title">Bookings</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="gatewayApp.msBookingBooking.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-booking"
+        [routerLink]="['/booking/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="gatewayApp.msBookingBooking.home.createLabel">Create a new Booking</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (bookings().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="gatewayApp.msBookingBooking.home.notFound">No Bookings found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.id">Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="userId">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.userId">User Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="scheduleId">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.scheduleId">Schedule Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="ticketIds">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.ticketIds">Ticket Ids</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="totalAmount">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.totalAmount">Total Amount</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="passengerDetails">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.passengerDetails">Passenger Details</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="contactEmail">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.contactEmail">Contact Email</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="contactPhone">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.contactPhone">Contact Phone</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="bookingReference">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.bookingReference">Booking Reference</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="createdAt">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.createdAt">Created At</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="updatedAt">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.updatedAt">Updated At</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="expiresAt">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingBooking.expiresAt">Expires At</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (booking of bookings(); track trackId(booking)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/booking', booking.id, 'view']">{{ booking.id }}</a>
+              </td>
+              <td>{{ booking.userId }}</td>
+              <td>{{ booking.scheduleId }}</td>
+              <td>{{ booking.ticketIds }}</td>
+              <td>{{ booking.totalAmount }}</td>
+              <td [jhiTranslate]="'gatewayApp.BookingStatus.' + (booking.status ?? 'null')">
+                {{
+                  { null: '', PENDING: 'PENDING', CONFIRMED: 'CONFIRMED', CANCELLED: 'CANCELLED', COMPLETED: 'COMPLETED' }[
+                    booking.status ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ booking.passengerDetails }}</td>
+              <td>{{ booking.contactEmail }}</td>
+              <td>{{ booking.contactPhone }}</td>
+              <td>{{ booking.bookingReference }}</td>
+              <td>{{ booking.createdAt | formatMediumDatetime }}</td>
+              <td>{{ booking.updatedAt | formatMediumDatetime }}</td>
+              <td>{{ booking.expiresAt | formatMediumDatetime }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/booking', booking.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/booking', booking.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(booking)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

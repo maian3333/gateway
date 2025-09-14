@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (user(); as userRef) {
+      <div>
+        <h2 data-cy="userDetailsHeading"><span jhiTranslate="gatewayApp.msUserUser.detail.title">User</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="gatewayApp.msUserUser.id">Id</span></dt>
+          <dd>
+            <span>{{ userRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.username">Username</span></dt>
+          <dd>
+            <span>{{ userRef.username }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.email">Email</span></dt>
+          <dd>
+            <span>{{ userRef.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.passwordHash">Password Hash</span></dt>
+          <dd>
+            <span>{{ userRef.passwordHash }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ userRef.firstName }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ userRef.lastName }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.phoneNumber">Phone Number</span></dt>
+          <dd>
+            <span>{{ userRef.phoneNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.dateOfBirth">Date Of Birth</span></dt>
+          <dd>
+            <span>{{ userRef.dateOfBirth | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ userRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.updatedAt">Updated At</span></dt>
+          <dd>
+            <span>{{ userRef.updatedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.keycloakUserId">Keycloak User Id</span></dt>
+          <dd>
+            <span>{{ userRef.keycloakUserId }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.userAvatar">User Avatar</span></dt>
+          <dd>
+            <span>{{ userRef.userAvatar }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msUserUser.isActive">Is Active</span></dt>
+          <dd>
+            <span>{{ userRef.isActive }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/user', userRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (booking(); as bookingRef) {
+      <div>
+        <h2 data-cy="bookingDetailsHeading"><span jhiTranslate="gatewayApp.msBookingBooking.detail.title">Booking</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.id">Id</span></dt>
+          <dd>
+            <span>{{ bookingRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.userId">User Id</span></dt>
+          <dd>
+            <span>{{ bookingRef.userId }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.scheduleId">Schedule Id</span></dt>
+          <dd>
+            <span>{{ bookingRef.scheduleId }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.ticketIds">Ticket Ids</span></dt>
+          <dd>
+            <span>{{ bookingRef.ticketIds }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.totalAmount">Total Amount</span></dt>
+          <dd>
+            <span>{{ bookingRef.totalAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'gatewayApp.BookingStatus.' + (bookingRef.status ?? 'null')">{{
+              { null: '', PENDING: 'PENDING', CONFIRMED: 'CONFIRMED', CANCELLED: 'CANCELLED', COMPLETED: 'COMPLETED' }[
+                bookingRef.status ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.passengerDetails">Passenger Details</span></dt>
+          <dd>
+            <span>{{ bookingRef.passengerDetails }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.contactEmail">Contact Email</span></dt>
+          <dd>
+            <span>{{ bookingRef.contactEmail }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.contactPhone">Contact Phone</span></dt>
+          <dd>
+            <span>{{ bookingRef.contactPhone }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.bookingReference">Booking Reference</span></dt>
+          <dd>
+            <span>{{ bookingRef.bookingReference }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ bookingRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.updatedAt">Updated At</span></dt>
+          <dd>
+            <span>{{ bookingRef.updatedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msBookingBooking.expiresAt">Expires At</span></dt>
+          <dd>
+            <span>{{ bookingRef.expiresAt | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/booking', bookingRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

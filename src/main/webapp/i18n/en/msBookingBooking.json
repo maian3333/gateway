@@ -1,0 +1,39 @@
+{
+  "gatewayApp": {
+    "msBookingBooking": {
+      "home": {
+        "title": "Bookings",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Booking",
+        "createOrEditLabel": "Create or edit a Booking",
+        "notFound": "No Bookings found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Booking {{ id }}?"
+      },
+      "detail": {
+        "title": "Booking"
+      },
+      "id": "Id",
+      "userId": "User Id",
+      "scheduleId": "Schedule Id",
+      "ticketIds": "Ticket Ids",
+      "totalAmount": "Total Amount",
+      "status": "Status",
+      "passengerDetails": "Passenger Details",
+      "contactEmail": "Contact Email",
+      "contactPhone": "Contact Phone",
+      "bookingReference": "Booking Reference",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "expiresAt": "Expires At"
+    }
+  },
+  "msBookingApp": {
+    "msBookingBooking": {
+      "created": "A new Booking is created with identifier {{ param }}",
+      "updated": "A Booking is updated with identifier {{ param }}",
+      "deleted": "A Booking is deleted with identifier {{ param }}"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "gatewayApp": {
+    "SeatType": {
+      "null": "",
+      "ECONOMY": "ECONOMY",
+      "BUSINESS": "BUSINESS",
+      "FIRST_CLASS": "FIRST_CLASS",
+      "VIP": "VIP"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "gatewayApp": {
+    "msRouteSchedule": {
+      "home": {
+        "title": "Schedules",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Schedule",
+        "createOrEditLabel": "Create or edit a Schedule",
+        "search": "Search for Schedule",
+        "notFound": "No Schedules found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Schedule {{ id }}?"
+      },
+      "detail": {
+        "title": "Schedule"
+      },
+      "id": "Id",
+      "departureTime": "Departure Time",
+      "arrivalTime": "Arrival Time",
+      "totalSeats": "Total Seats",
+      "availableSeats": "Available Seats",
+      "basePrice": "Base Price",
+      "isActive": "Is Active",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "route": "Route"
+    }
+  },
+  "msRouteApp": {
+    "msRouteSchedule": {
+      "created": "A new Schedule is created with identifier {{ param }}",
+      "updated": "A Schedule is updated with identifier {{ param }}",
+      "deleted": "A Schedule is deleted with identifier {{ param }}"
+    }
+  }
+}

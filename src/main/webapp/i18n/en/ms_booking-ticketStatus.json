@@ -1,0 +1,11 @@
+{
+  "gatewayApp": {
+    "TicketStatus": {
+      "null": "",
+      "AVAILABLE": "AVAILABLE",
+      "BOOKED": "BOOKED",
+      "CANCELLED": "CANCELLED",
+      "EXPIRED": "EXPIRED"
+    }
+  }
+}

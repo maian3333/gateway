@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (schedule(); as scheduleRef) {
+      <div>
+        <h2 data-cy="scheduleDetailsHeading"><span jhiTranslate="gatewayApp.msRouteSchedule.detail.title">Schedule</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.id">Id</span></dt>
+          <dd>
+            <span>{{ scheduleRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.departureTime">Departure Time</span></dt>
+          <dd>
+            <span>{{ scheduleRef.departureTime | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.arrivalTime">Arrival Time</span></dt>
+          <dd>
+            <span>{{ scheduleRef.arrivalTime | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.totalSeats">Total Seats</span></dt>
+          <dd>
+            <span>{{ scheduleRef.totalSeats }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.availableSeats">Available Seats</span></dt>
+          <dd>
+            <span>{{ scheduleRef.availableSeats }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.basePrice">Base Price</span></dt>
+          <dd>
+            <span>{{ scheduleRef.basePrice }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.isActive">Is Active</span></dt>
+          <dd>
+            <span>{{ scheduleRef.isActive }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ scheduleRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.updatedAt">Updated At</span></dt>
+          <dd>
+            <span>{{ scheduleRef.updatedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteSchedule.route">Route</span></dt>
+          <dd>
+            @if (schedule()!.route) {
+              <div>
+                <a [routerLink]="['/route', schedule()!.route?.id, 'view']">{{ scheduleRef.route?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/schedule', scheduleRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

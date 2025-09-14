@@ -1,0 +1,150 @@
+<div>
+  <h2 id="page-heading" data-cy="TicketHeading">
+    <span jhiTranslate="gatewayApp.msBookingTicket.home.title">Tickets</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="gatewayApp.msBookingTicket.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-ticket"
+        [routerLink]="['/ticket/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="gatewayApp.msBookingTicket.home.createLabel">Create a new Ticket</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (tickets().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="gatewayApp.msBookingTicket.home.notFound">No Tickets found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.id">Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="scheduleId">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.scheduleId">Schedule Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="seatNumber">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.seatNumber">Seat Number</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="seatType">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.seatType">Seat Type</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="price">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.price">Price</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="reservedUntil">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.reservedUntil">Reserved Until</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="createdAt">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.createdAt">Created At</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="updatedAt">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msBookingTicket.updatedAt">Updated At</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (ticket of tickets(); track trackId(ticket)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/ticket', ticket.id, 'view']">{{ ticket.id }}</a>
+              </td>
+              <td>{{ ticket.scheduleId }}</td>
+              <td>{{ ticket.seatNumber }}</td>
+              <td [jhiTranslate]="'gatewayApp.SeatType.' + (ticket.seatType ?? 'null')">
+                {{
+                  { null: '', ECONOMY: 'ECONOMY', BUSINESS: 'BUSINESS', FIRST_CLASS: 'FIRST_CLASS', VIP: 'VIP' }[ticket.seatType ?? 'null']
+                }}
+              </td>
+              <td>{{ ticket.price }}</td>
+              <td [jhiTranslate]="'gatewayApp.TicketStatus.' + (ticket.status ?? 'null')">
+                {{
+                  { null: '', AVAILABLE: 'AVAILABLE', BOOKED: 'BOOKED', CANCELLED: 'CANCELLED', EXPIRED: 'EXPIRED' }[
+                    ticket.status ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ ticket.reservedUntil | formatMediumDatetime }}</td>
+              <td>{{ ticket.createdAt | formatMediumDatetime }}</td>
+              <td>{{ ticket.updatedAt | formatMediumDatetime }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/ticket', ticket.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/ticket', ticket.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(ticket)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

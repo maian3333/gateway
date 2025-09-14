@@ -1,0 +1,232 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-route-heading" data-cy="RouteCreateUpdateHeading" jhiTranslate="gatewayApp.msRouteRoute.home.createOrEditLabel">
+        Create or edit a Route
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          @let idRef = editForm.get('id')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="gatewayApp.msRouteRoute.id">Id</label>
+            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            @if (idRef.invalid && (idRef.dirty || idRef.touched)) {
+              <div>
+                @if (editForm.get('id')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        @let routeNameRef = editForm.get('routeName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_routeName" jhiTranslate="gatewayApp.msRouteRoute.routeName">Route Name</label>
+          <input type="text" class="form-control" name="routeName" id="field_routeName" data-cy="routeName" formControlName="routeName" />
+          @if (routeNameRef.invalid && (routeNameRef.dirty || routeNameRef.touched)) {
+            <div>
+              @if (editForm.get('routeName')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let originRef = editForm.get('origin')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_origin" jhiTranslate="gatewayApp.msRouteRoute.origin">Origin</label>
+          <input type="text" class="form-control" name="origin" id="field_origin" data-cy="origin" formControlName="origin" />
+          @if (originRef.invalid && (originRef.dirty || originRef.touched)) {
+            <div>
+              @if (editForm.get('origin')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let destinationRef = editForm.get('destination')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_destination" jhiTranslate="gatewayApp.msRouteRoute.destination">Destination</label>
+          <input
+            type="text"
+            class="form-control"
+            name="destination"
+            id="field_destination"
+            data-cy="destination"
+            formControlName="destination"
+          />
+          @if (destinationRef.invalid && (destinationRef.dirty || destinationRef.touched)) {
+            <div>
+              @if (editForm.get('destination')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let distanceRef = editForm.get('distance')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_distance" jhiTranslate="gatewayApp.msRouteRoute.distance">Distance</label>
+          <input type="number" class="form-control" name="distance" id="field_distance" data-cy="distance" formControlName="distance" />
+          @if (distanceRef.invalid && (distanceRef.dirty || distanceRef.touched)) {
+            <div>
+              @if (editForm.get('distance')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('distance')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let estimatedDurationRef = editForm.get('estimatedDuration')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_estimatedDuration" jhiTranslate="gatewayApp.msRouteRoute.estimatedDuration"
+            >Estimated Duration</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="estimatedDuration"
+            id="field_estimatedDuration"
+            data-cy="estimatedDuration"
+            formControlName="estimatedDuration"
+          />
+          @if (estimatedDurationRef.invalid && (estimatedDurationRef.dirty || estimatedDurationRef.touched)) {
+            <div>
+              @if (editForm.get('estimatedDuration')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('estimatedDuration')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let transportTypeRef = editForm.get('transportType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_transportType" jhiTranslate="gatewayApp.msRouteRoute.transportType">Transport Type</label>
+          <select
+            class="form-control"
+            name="transportType"
+            formControlName="transportType"
+            id="field_transportType"
+            data-cy="transportType"
+          >
+            <option [ngValue]="null">{{ 'gatewayApp.TransportType.null' | translate }}</option>
+            @for (transportType of transportTypeValues; track $index) {
+              <option [value]="transportType">{{ 'gatewayApp.TransportType.' + transportType | translate }}</option>
+            }
+          </select>
+          @if (transportTypeRef.invalid && (transportTypeRef.dirty || transportTypeRef.touched)) {
+            <div>
+              @if (editForm.get('transportType')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let isActiveRef = editForm.get('isActive')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_isActive" jhiTranslate="gatewayApp.msRouteRoute.isActive">Is Active</label>
+          <input type="checkbox" class="form-check" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />
+          @if (isActiveRef.invalid && (isActiveRef.dirty || isActiveRef.touched)) {
+            <div>
+              @if (editForm.get('isActive')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let createdAtRef = editForm.get('createdAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_createdAt" jhiTranslate="gatewayApp.msRouteRoute.createdAt">Created At</label>
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (createdAtRef.invalid && (createdAtRef.dirty || createdAtRef.touched)) {
+            <div>
+              @if (editForm.get('createdAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('createdAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let updatedAtRef = editForm.get('updatedAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_updatedAt" jhiTranslate="gatewayApp.msRouteRoute.updatedAt">Updated At</label>
+          <div class="d-flex">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="updatedAt"
+              formControlName="updatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (updatedAtRef.invalid && (updatedAtRef.dirty || updatedAtRef.touched)) {
+            <div>
+              @if (editForm.get('updatedAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('updatedAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

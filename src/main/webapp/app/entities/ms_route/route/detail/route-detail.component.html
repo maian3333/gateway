@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (route(); as routeRef) {
+      <div>
+        <h2 data-cy="routeDetailsHeading"><span jhiTranslate="gatewayApp.msRouteRoute.detail.title">Route</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.id">Id</span></dt>
+          <dd>
+            <span>{{ routeRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.routeName">Route Name</span></dt>
+          <dd>
+            <span>{{ routeRef.routeName }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.origin">Origin</span></dt>
+          <dd>
+            <span>{{ routeRef.origin }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.destination">Destination</span></dt>
+          <dd>
+            <span>{{ routeRef.destination }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.distance">Distance</span></dt>
+          <dd>
+            <span>{{ routeRef.distance }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.estimatedDuration">Estimated Duration</span></dt>
+          <dd>
+            <span>{{ routeRef.estimatedDuration }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.transportType">Transport Type</span></dt>
+          <dd>
+            <span [jhiTranslate]="'gatewayApp.TransportType.' + (routeRef.transportType ?? 'null')">{{
+              { null: '', TRAIN: 'TRAIN', BUS: 'BUS' }[routeRef.transportType ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.isActive">Is Active</span></dt>
+          <dd>
+            <span>{{ routeRef.isActive }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ routeRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="gatewayApp.msRouteRoute.updatedAt">Updated At</span></dt>
+          <dd>
+            <span>{{ routeRef.updatedAt | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/route', routeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

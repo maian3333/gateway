@@ -1,0 +1,45 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 0,
+    "applicationType": "gateway",
+    "applications": {
+      "ms_booking": {
+        "applicationIndex": 3,
+        "serverPort": "8083"
+      },
+      "ms_notification": {
+        "applicationIndex": 5,
+        "serverPort": "8085"
+      },
+      "ms_payment": {
+        "applicationIndex": 4,
+        "serverPort": "8084"
+      },
+      "ms_route": {
+        "applicationIndex": 2,
+        "serverPort": "8082"
+      },
+      "ms_user": {
+        "applicationIndex": 1,
+        "serverPort": "8081"
+      }
+    },
+    "authenticationType": "oauth2",
+    "baseName": "gateway",
+    "databaseType": "no",
+    "devServerPort": 4200,
+    "enableSwaggerCodegen": true,
+    "entities": ["User", "KeycloakUser", "Route", "Schedule", "Ticket", "Booking", "Payment", "Notification"],
+    "jhipsterVersion": "8.10.0",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1756658772000,
+    "monorepository": true,
+    "nativeLanguage": "en",
+    "packageName": "com.ticketsystem.gateway",
+    "reactive": true,
+    "serverPort": "8080",
+    "serviceDiscoveryType": "consul",
+    "skipCommitHook": true,
+    "skipUserManagement": true
+  }
+}

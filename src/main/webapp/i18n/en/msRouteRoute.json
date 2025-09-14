@@ -1,0 +1,38 @@
+{
+  "gatewayApp": {
+    "msRouteRoute": {
+      "home": {
+        "title": "Routes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Route",
+        "createOrEditLabel": "Create or edit a Route",
+        "search": "Search for Route",
+        "notFound": "No Routes found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Route {{ id }}?"
+      },
+      "detail": {
+        "title": "Route"
+      },
+      "id": "Id",
+      "routeName": "Route Name",
+      "origin": "Origin",
+      "destination": "Destination",
+      "distance": "Distance",
+      "estimatedDuration": "Estimated Duration",
+      "transportType": "Transport Type",
+      "isActive": "Is Active",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "routeName": "Route Name"
+    }
+  },
+  "msRouteApp": {
+    "msRouteRoute": {
+      "created": "A new Route is created with identifier {{ param }}",
+      "updated": "A Route is updated with identifier {{ param }}",
+      "deleted": "A Route is deleted with identifier {{ param }}"
+    }
+  }
+}

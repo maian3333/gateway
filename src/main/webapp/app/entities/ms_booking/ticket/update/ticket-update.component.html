@@ -1,0 +1,209 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-ticket-heading" data-cy="TicketCreateUpdateHeading" jhiTranslate="gatewayApp.msBookingTicket.home.createOrEditLabel">
+        Create or edit a Ticket
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          @let idRef = editForm.get('id')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="gatewayApp.msBookingTicket.id">Id</label>
+            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            @if (idRef.invalid && (idRef.dirty || idRef.touched)) {
+              <div>
+                @if (editForm.get('id')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        @let scheduleIdRef = editForm.get('scheduleId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_scheduleId" jhiTranslate="gatewayApp.msBookingTicket.scheduleId">Schedule Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="scheduleId"
+            id="field_scheduleId"
+            data-cy="scheduleId"
+            formControlName="scheduleId"
+          />
+          @if (scheduleIdRef.invalid && (scheduleIdRef.dirty || scheduleIdRef.touched)) {
+            <div>
+              @if (editForm.get('scheduleId')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let seatNumberRef = editForm.get('seatNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_seatNumber" jhiTranslate="gatewayApp.msBookingTicket.seatNumber">Seat Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="seatNumber"
+            id="field_seatNumber"
+            data-cy="seatNumber"
+            formControlName="seatNumber"
+          />
+          @if (seatNumberRef.invalid && (seatNumberRef.dirty || seatNumberRef.touched)) {
+            <div>
+              @if (editForm.get('seatNumber')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let seatTypeRef = editForm.get('seatType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_seatType" jhiTranslate="gatewayApp.msBookingTicket.seatType">Seat Type</label>
+          <select class="form-control" name="seatType" formControlName="seatType" id="field_seatType" data-cy="seatType">
+            <option [ngValue]="null">{{ 'gatewayApp.SeatType.null' | translate }}</option>
+            @for (seatType of seatTypeValues; track $index) {
+              <option [value]="seatType">{{ 'gatewayApp.SeatType.' + seatType | translate }}</option>
+            }
+          </select>
+          @if (seatTypeRef.invalid && (seatTypeRef.dirty || seatTypeRef.touched)) {
+            <div>
+              @if (editForm.get('seatType')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let priceRef = editForm.get('price')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_price" jhiTranslate="gatewayApp.msBookingTicket.price">Price</label>
+          <input type="number" class="form-control" name="price" id="field_price" data-cy="price" formControlName="price" />
+          @if (priceRef.invalid && (priceRef.dirty || priceRef.touched)) {
+            <div>
+              @if (editForm.get('price')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('price')?.errors?.number" jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let statusRef = editForm.get('status')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_status" jhiTranslate="gatewayApp.msBookingTicket.status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'gatewayApp.TicketStatus.null' | translate }}</option>
+            @for (ticketStatus of ticketStatusValues; track $index) {
+              <option [value]="ticketStatus">{{ 'gatewayApp.TicketStatus.' + ticketStatus | translate }}</option>
+            }
+          </select>
+          @if (statusRef.invalid && (statusRef.dirty || statusRef.touched)) {
+            <div>
+              @if (editForm.get('status')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_reservedUntil" jhiTranslate="gatewayApp.msBookingTicket.reservedUntil">Reserved Until</label>
+          <div class="d-flex">
+            <input
+              id="field_reservedUntil"
+              data-cy="reservedUntil"
+              type="datetime-local"
+              class="form-control"
+              name="reservedUntil"
+              formControlName="reservedUntil"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let createdAtRef = editForm.get('createdAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_createdAt" jhiTranslate="gatewayApp.msBookingTicket.createdAt">Created At</label>
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (createdAtRef.invalid && (createdAtRef.dirty || createdAtRef.touched)) {
+            <div>
+              @if (editForm.get('createdAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('createdAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let updatedAtRef = editForm.get('updatedAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_updatedAt" jhiTranslate="gatewayApp.msBookingTicket.updatedAt">Updated At</label>
+          <div class="d-flex">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="updatedAt"
+              formControlName="updatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (updatedAtRef.invalid && (updatedAtRef.dirty || updatedAtRef.touched)) {
+            <div>
+              @if (editForm.get('updatedAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('updatedAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

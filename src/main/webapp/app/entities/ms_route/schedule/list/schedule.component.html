@@ -1,0 +1,180 @@
+<div>
+  <h2 id="page-heading" data-cy="ScheduleHeading">
+    <span jhiTranslate="gatewayApp.msRouteSchedule.home.title">Schedules</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="gatewayApp.msRouteSchedule.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-schedule"
+        [routerLink]="['/schedule/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="gatewayApp.msRouteSchedule.home.createLabel">Create a new Schedule</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" jhiTranslate="gatewayApp.msRouteSchedule.home.search">Search for Schedule</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'gatewayApp.msRouteSchedule.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (schedules().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="gatewayApp.msRouteSchedule.home.notFound">No Schedules found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.id">Id</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="departureTime">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.departureTime">Departure Time</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="arrivalTime">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.arrivalTime">Arrival Time</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="totalSeats">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.totalSeats">Total Seats</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="availableSeats">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.availableSeats">Available Seats</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="basePrice">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.basePrice">Base Price</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="isActive">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.isActive">Is Active</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="createdAt">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.createdAt">Created At</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="updatedAt">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.updatedAt">Updated At</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="route.id">
+              <div class="d-flex">
+                <span jhiTranslate="gatewayApp.msRouteSchedule.route">Route</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (schedule of schedules(); track trackId(schedule)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/schedule', schedule.id, 'view']">{{ schedule.id }}</a>
+              </td>
+              <td>{{ schedule.departureTime | formatMediumDatetime }}</td>
+              <td>{{ schedule.arrivalTime | formatMediumDatetime }}</td>
+              <td>{{ schedule.totalSeats }}</td>
+              <td>{{ schedule.availableSeats }}</td>
+              <td>{{ schedule.basePrice }}</td>
+              <td>{{ schedule.isActive }}</td>
+              <td>{{ schedule.createdAt | formatMediumDatetime }}</td>
+              <td>{{ schedule.updatedAt | formatMediumDatetime }}</td>
+              <td>
+                @if (schedule.route) {
+                  <div>
+                    <a [routerLink]="['/route', schedule.route.id, 'view']">{{ schedule.route.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/schedule', schedule.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/schedule', schedule.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(schedule)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

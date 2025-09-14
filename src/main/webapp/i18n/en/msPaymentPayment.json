@@ -1,0 +1,37 @@
+{
+  "gatewayApp": {
+    "msPaymentPayment": {
+      "home": {
+        "title": "Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Payment",
+        "createOrEditLabel": "Create or edit a Payment",
+        "notFound": "No Payments found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Payment {{ id }}?"
+      },
+      "detail": {
+        "title": "Payment"
+      },
+      "id": "Id",
+      "bookingId": "Booking Id",
+      "userId": "User Id",
+      "amount": "Amount",
+      "currency": "Currency",
+      "paymentMethod": "Payment Method",
+      "status": "Status",
+      "transactionId": "Transaction Id",
+      "paymentGatewayResponse": "Payment Gateway Response",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At"
+    }
+  },
+  "msPaymentApp": {
+    "msPaymentPayment": {
+      "created": "A new Payment is created with identifier {{ param }}",
+      "updated": "A Payment is updated with identifier {{ param }}",
+      "deleted": "A Payment is deleted with identifier {{ param }}"
+    }
+  }
+}
