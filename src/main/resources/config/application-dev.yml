@@ -15,13 +15,12 @@
 
 server:
   name: gateway
-  port: 8081
+  port: 8080
   forward-headers-strategy: native
   sql-port: 3307
-
+  dev-config-folder: /D:/VsCode-WordSpace/ticket-store/backend/ticket-store-central-config 
+  # dev-config-folder:  ${DEV_CONFIG_FILE:/home/phungvip/Desktop/work-space/ticket-store/backend/ticket-store-central-config/application-dev.yml}
 spring:
   config:
-    import:
-      # Import shared config first
-      - "optional:file:/home/phungvip/Desktop/work-space/ticket-store/backend/ticket-store-central-config/application-dev.yml"
-      # Then service-specific config (will override shared)
+    # Import shared config first
+    import: optional:file:${server.dev-config-folder}/application-dev.yml          # Then service-specific config (will override shared)
